@@ -2,9 +2,10 @@ define(function () {
     'use strict';
 
     function handler() {
-        this.model.data = getJsonString.call(this, function (successMessage) {
-            console.info(successMessage);
-        },
+        this.model.data = getJsonString.call(this,
+            function (successMessage) {
+                console.info(successMessage);
+            },
             function (errorMessage) {
                 console.error(errorMessage);
             });

@@ -4,50 +4,49 @@
             {
                 "id": "0",
                 "name": "Кормили ли Вы когда-либо каких-нибудь животных?",
-                "availableAnswersIds": [0, 1, 2]
+                "availableAnswersIds": [ 0, 1, 2 ]
             },
             {
                 "id": "1",
                 "name": "Есть ли у Вас дома животные?",
-                "availableAnswersIds": [3, 4, 5]
+                "availableAnswersIds": [ 3, 4, 5 ]
             },
             {
                 "id": "2",
                 "name": "Разбираетесь ли Вы в породах собак?",
-                "availableAnswersIds": [6, 7, 8]
+                "availableAnswersIds": [ 6, 7, 8 ]
             },
             {
                 "id": "3",
                 "name": "Случалось ли Вам бить собаку?",
-                "availableAnswersIds": [9, 10, 11]
+                "availableAnswersIds": [ 9, 10, 11 ]
             },
             {
                 "id": "4",
                 "name": "Любите ли Вы смотреть по телевизору передачи о животных?",
-                "availableAnswersIds": [12, 13, 14]
+                "availableAnswersIds": [ 12, 13, 14 ]
             },
             {
                 "id": "5",
                 "name": "Если вы видите на улице тощего котёнка,как вы поступите?",
-                "availableAnswersIds": [15, 16, 17]
+                "availableAnswersIds": [ 15, 16, 17 ]
             },
             {
                 "id": "6",
                 "name": "Вы пришли в гости к своему другу,у которого есть,ну допустим,собака.Она радостно подбегает к вам.Вы...",
-                "availableAnswersIds": [18, 19, 20]
+                "availableAnswersIds": [ 18, 19, 20 ]
             },
             {
                 "id": "7",
                 "name": "Ваша комната...",
-                "availableAnswersIds": [23, 24, 25]
+                "availableAnswersIds": [ 23, 24, 25 ]
             },
             {
                 "id": "8",
                 "name": "У вас есть домашние животные?",
-                "availableAnswersIds": [26, 27, 28]
+                "availableAnswersIds": [ 26, 27, 28 ]
             }
         ],
-
         "answers": [
             {
                 "id": "0",
@@ -119,7 +118,6 @@
                 "name": "Нет, не люблю.",
                 "nextQuestionId": "5"
             },
-
             {
                 "id": "14",
                 "name": "У меня на это времени нет.",

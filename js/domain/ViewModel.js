@@ -3,6 +3,15 @@
 define(["./Model", "./Checklist"], function (Model, Checklist) {
     'use strict';
 
+    function initView() {
+        $(".card").css("visibility", "visible");
+        if (Checklist.results.length != 0) {
+            this.results(Checklist.results);
+            this.shouldShowForm(false);
+            this.shouldShowResults(true);
+        }
+    }
+
     /* Gets answers by id for current question */
     function initAnswers(currentQuestion) {
         var i;
@@ -30,30 +39,30 @@ define(["./Model", "./Checklist"], function (Model, Checklist) {
         return output;
     };
 
-
     var ViewModel = function () {
         var self = this;
-
         this.currentQuestion = ko.observable(Model.getQuestions()[0]);
         this.questionTitle = ko.observable(self.currentQuestion().name);
         this.No = ko.observable(1);
-        this.TestName = ko.observable("Тест: Любите ли Вы животных?"); /// http://www.tests.org.ua/start.php?test_id=202&ans=11
+        this.TestName = ko.observable("Тест: Любите ли Вы животных?");
         this.results = ko.observable();
         this.shouldShowResults = ko.observable(false);
         this.shouldShowForm = ko.observable(true);
         this.answers = ko.observableArray(initAnswers(self.currentQuestion));
         this.selectedAnswer = ko.observable();
+        initView.call(this);
 
         this.setSelectedAnswer = function (answer) {
             self.selectedAnswer(answer);
+            console.log(answer);
             $(".choice").each(function () {
                 $(this).change(function () {
                     $(".choice").prop('checked', false);
                     $(this).prop('checked', true);
                 });
             });
-            return true;
             /* makes checked but leave others checked*/
+            return true;
         }
 
         this.setNextQuestion = function () {
@@ -64,6 +73,7 @@ define(["./Model", "./Checklist"], function (Model, Checklist) {
                 if (self.selectedAnswer().nextQuestionId == -1) {
                     self.shouldShowForm(false);
                     self.shouldShowResults(true);
+                    Checklist.storeResults();
                     return;
                 }
                 updateCurrentQuestion(self.selectedAnswer().nextQuestionId);
@@ -77,12 +87,14 @@ define(["./Model", "./Checklist"], function (Model, Checklist) {
         this.resetTest = function () {
             var allQuestions;
 
+            $(".choice").prop('checked', false);
             allQuestions = Model.getQuestions();
             self.shouldShowForm(true);
             self.shouldShowResults(false);
             updateCurrentQuestion(allQuestions[0]);
             self.No(1);
             Checklist.results.length = 0;
+            //Checklist.resetResults();
         }
 
         function updateCurrentQuestion(id) {
