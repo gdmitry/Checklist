@@ -47,11 +47,13 @@ var TableHiddenEvent = new CustomEvent(
     });
 
     $(".result-table").on("TableVisibleEvent", function () {      
-       $('.animateButton').css('visibility', 'visible');
+        $('.animateButton').css('visibility', 'visible');
+        isResultTableVisible = true;
     });
 
     $(".result-table").on("TableHiddenEvent", function () {       
-       $('.animateButton').css('visibility', 'hidden');
+        $('.animateButton').css('visibility', 'hidden');
+        isResultTableVisible = false;
     });
 
 })();
