@@ -1,10 +1,30 @@
-﻿(function () {
+﻿// Define a new events.
+var TableVisibleEvent = new CustomEvent(
+  "TableVisible",
+  {
+      detail: {
+          message: "Hello there",
+          time: new Date()
+      },
+      bubbles: true,
+      cancelable: true
+  });
+
+var TableHiddenEvent = new CustomEvent(
+  "TableHiddenEvent",
+  {
+      detail: {
+          message: "Hello there",
+          time: new Date()
+      },
+      bubbles: true,
+      cancelable: true
+  });
+
+(function () {
     'use strict';
 
     $(".card").append('<button type="button" style="visibility: hidden" class="animateButton">Animate</button>');
-    if ($('.result-table').css('display') === 'block') {
-        $('.animateButton').css('visibility', 'visible');
-    }
 
     var time = 500;
     var isResultTableVisible = true;
@@ -26,14 +46,12 @@
         animateUp();
     });
 
-    $('.result-table').bind('DOMAttrModified', function (e) {
-        if ($('.result-table').css('display') === 'block') {
-            $('.animateButton').css('visibility', 'visible');
-            isResultTableVisible = true;
-        } else {
-            $('.animateButton').css('visibility', 'hidden');
-            isResultTableVisible = false;
-        }
+    $(".result-table").on("TableVisibleEvent", function () {      
+       $('.animateButton').css('visibility', 'visible');
+    });
+
+    $(".result-table").on("TableHiddenEvent", function () {       
+       $('.animateButton').css('visibility', 'hidden');
     });
 
 })();

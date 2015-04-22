@@ -172,22 +172,3 @@ h1 {
     .result-table tr:first-child td:last-child {
         border-width: 0px 0px 1px 1px;
     }
-
-
-
-    #box4 {
-    position: relative;
-    box-shadow: 8px 8px 15px #666;
-}
-
-
-    #box1, #box2, #box3, #box4, #test1, #test2, #test3, #test4 {
-    float: left;
-    margin: 0px 0px 30px 50px;
-    width: 100px;
-    height: 100px;
-    border-radius: 10px;
-    line-height: 90px;
-    text-align: center;
-    border: 3px solid #A9A9A9;
-}

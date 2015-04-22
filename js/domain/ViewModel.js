@@ -1,14 +1,16 @@
 // http://jsfiddle.net/rniemeyer/FvZXj/
 // http://jsfiddle.net/rniemeyer/8eeUR/
+
 define(["./Model", "./Checklist"], function (Model, Checklist) {
     'use strict';
 
     function initView() {
         $(".card").css("visibility", "visible");
-        if (Checklist.results.length != 0) {
+        if (Checklist.results.length) {
             this.results(Checklist.results);
             this.shouldShowForm(false);
             this.shouldShowResults(true);
+            $(".result-table").trigger("TableVisibleEvent");
         }
     }
 
@@ -42,19 +44,22 @@ define(["./Model", "./Checklist"], function (Model, Checklist) {
     var ViewModel = function () {
         var self = this;
         this.currentQuestion = ko.observable(Model.getQuestions()[0]);
-        this.questionTitle = ko.observable(self.currentQuestion().name);
         this.No = ko.observable(1);
+        this.questionTitle = ko.computed(function () {
+            return "Вопрос " + self.No() + ": " + self.currentQuestion().name;
+        });
+        this.answers = ko.computed(function () {
+            return initAnswers(self.currentQuestion);
+        });
         this.TestName = ko.observable("Тест: Любите ли Вы животных?");
         this.results = ko.observable();
         this.shouldShowResults = ko.observable(false);
         this.shouldShowForm = ko.observable(true);
-        this.answers = ko.observableArray(initAnswers(self.currentQuestion));
         this.selectedAnswer = ko.observable();
         initView.call(this);
 
         this.setSelectedAnswer = function (answer) {
             self.selectedAnswer(answer);
-            console.log(answer);
             $(".choice").each(function () {
                 $(this).change(function () {
                     $(".choice").prop('checked', false);
@@ -73,6 +78,7 @@ define(["./Model", "./Checklist"], function (Model, Checklist) {
                 if (self.selectedAnswer().nextQuestionId == -1) {
                     self.shouldShowForm(false);
                     self.shouldShowResults(true);
+                    $(".result-table").trigger("TableVisibleEvent");
                     Checklist.storeResults();
                     return;
                 }
@@ -91,6 +97,7 @@ define(["./Model", "./Checklist"], function (Model, Checklist) {
             allQuestions = Model.getQuestions();
             self.shouldShowForm(true);
             self.shouldShowResults(false);
+            $(".result-table").trigger("TableHiddenEvent");
             updateCurrentQuestion(allQuestions[0]);
             self.No(1);
             Checklist.results.length = 0;
@@ -105,8 +112,6 @@ define(["./Model", "./Checklist"], function (Model, Checklist) {
 
             if (typeof id.name !== 'undefined') {
                 self.currentQuestion(id);
-                self.questionTitle(id.name);
-                self.answers(initAnswers(self.currentQuestion));
                 return;
             }
 
@@ -117,8 +122,6 @@ define(["./Model", "./Checklist"], function (Model, Checklist) {
                 elem = allQuestions[i];
                 if (elem.id == id) {
                     self.currentQuestion(elem);
-                    self.questionTitle(elem.name);
-                    self.answers(initAnswers(self.currentQuestion));
                     break;
                 }
             }

@@ -27,6 +27,7 @@ define(function () {
                 }
             } else {
                 onFailure("There was a problem with the request! " + this.status);
+
             }
         }
     }
@@ -62,10 +63,12 @@ define(function () {
 
     var Model = function () {
         this.data = [];
+
         return this;
     }
 
     Model.prototype.getQuestions = function () {
+
         var questions = this.data.checklist.questions || [];
         return questions;
     }

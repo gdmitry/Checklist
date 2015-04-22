@@ -17,18 +17,6 @@ define(function () {
         }
     }
 
-    function storeResult() {
-        if (checkStorage()) {
-            localStorage.setItem('testResults', JSON.stringify(this.results));
-        }
-    }
-
-    function resetStorage() {
-        if (checkStorage()) {
-            localStorage.removeItem('testResults');
-        }
-    }
-
     var Checklist = function () {
         this.results = [];
         retriveResults.call(this);
@@ -37,15 +25,18 @@ define(function () {
 
     Checklist.prototype.addResult = function (question, answer) {
         this.results.push({ question: question, answer: answer });
-
     }
 
     Checklist.prototype.resetResults = function () {
-        resetStorage();
+        if (checkStorage()) {
+            localStorage.removeItem('testResults');
+        }
     }
 
     Checklist.prototype.storeResults = function () {
-        storeResult.call(this);
+        if (checkStorage()) {
+            localStorage.setItem('testResults', JSON.stringify(this.results));
+        }
     }
 
     return new Checklist();
