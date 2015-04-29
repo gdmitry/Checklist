@@ -2,17 +2,19 @@
     'use strict';
 
     var DataService = function () {
-        this.textData = textData;       
+        this.data = this.processData(textData);
         return this;
     }
 
-    DataService.prototype.processData = function () {
+    DataService.prototype.processData = function (textData) {
+        var data;
         try {
-            this.data = JSON.parse(this.textData);
+            data = JSON.parse(textData);
         } catch (e) {
             throw Error("JSON.parse");
         }
-        return this.data;
+        return data;
     }
+
     return new DataService();
 });

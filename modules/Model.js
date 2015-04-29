@@ -2,7 +2,7 @@ define("Model", ['DataService'], function (dataService) {
     'use strict';
 
     var Model = function () {
-        this.data = dataService.processData();
+        this.data = dataService.data;
         return this;
     };
 

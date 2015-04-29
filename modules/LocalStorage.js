@@ -17,8 +17,7 @@
         }        
     };
 
-    LocalStorage.prototype.retriveResults = function () {
-        
+    LocalStorage.prototype.retriveResults = function () {        
         if (this.checkStorage()) {
             try {
                 return JSON.parse(this.localStorage.getItem('testResults')) || [];
