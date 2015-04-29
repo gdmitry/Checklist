@@ -1,4 +1,4 @@
-﻿// Define a new events.
+﻿
 var TableVisibleEvent = new CustomEvent(
   "TableVisible",
   {
@@ -46,12 +46,12 @@ var TableHiddenEvent = new CustomEvent(
         animateUp();
     });
 
-    $(".result-table").on("TableVisibleEvent", function () {      
+    $(".result-table").on("TableVisibleEvent", function () {
         $('.animateButton').css('visibility', 'visible');
         isResultTableVisible = true;
     });
 
-    $(".result-table").on("TableHiddenEvent", function () {       
+    $(".result-table").on("TableHiddenEvent", function () {
         $('.animateButton').css('visibility', 'hidden');
         isResultTableVisible = false;
     });

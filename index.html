@@ -17,11 +17,10 @@
                 <h1>
                     <strong data-bind="text: questionTitle">Question</strong>
                 </h1>
-
                 <div data-bind="foreach: answers">
                     <label>
-                        <input type="checkbox" class="choice" name="availableAnswers"
-                               data-bind="click: $root.setSelectedAnswer" />
+                        <input type="radio" class="choice" name="availableAnswers"
+                               data-bind="click: $root.setSelectedAnswer"/>
                         <span data-bind="text: name"></span>
                     </label>
                     <br />
@@ -48,12 +47,11 @@
             <button type="button" class="resetButton" data-bind="click: resetTest">Начать заново</button>
         </div>
     </div>
-    <script type='text/javascript' src='js/tools/modernizr.js'></script>
-    <script type='text/javascript' src="js/tools/jquery-2.1.3.min.js"></script>
-    <script type='text/javascript' src='js/animation/animation.js'></script>
-    <script type='text/javascript' src='js/tools/knockout.js'></script>
-    <script data-main="js/main" src="js/tools/require.js"></script>
-    <script type='text/javascript' src='js/tools/boxshadow.js'></script>
-
+    <script type='text/javascript' src='lib/modernizr.js'></script>
+    <script type='text/javascript' src="lib/jquery-2.1.3.min.js"></script>
+    <script type='text/javascript' src='animation/animation.js'></script>
+    <script type='text/javascript' src='lib/knockout.js'></script>
+    <script data-main="main" src="lib/require.js"></script>    
+    <script type='text/javascript' src='lib/boxshadow.js'></script>
 </body>
 </html>
