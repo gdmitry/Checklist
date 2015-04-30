@@ -1,26 +1,4 @@
 ﻿
-var TableVisibleEvent = new CustomEvent(
-  "TableVisible",
-  {
-      detail: {
-          message: "Hello there",
-          time: new Date()
-      },
-      bubbles: true,
-      cancelable: true
-  });
-
-var TableHiddenEvent = new CustomEvent(
-  "TableHiddenEvent",
-  {
-      detail: {
-          message: "Hello there",
-          time: new Date()
-      },
-      bubbles: true,
-      cancelable: true
-  });
-
 (function () {
     'use strict';
 

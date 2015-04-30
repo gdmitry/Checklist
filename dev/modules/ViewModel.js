@@ -1,24 +1,49 @@
 // http://jsfiddle.net/rniemeyer/FvZXj/
 // http://jsfiddle.net/rniemeyer/8eeUR/
 
-define("ViewModel", ["Model", "Checklist"], function (Model, Checklist) {
+define(["./Model"], function (model) {
     'use strict';
 
-    var model = new Model();
+    if (typeof Array.prototype.some === 'undefined') {
+        Array.prototype.some = function () {
+            var i;
+            var self = arguments[1];
 
-    var ViewModel = function (koTest) {
+            for (i = 0; i < this.length; i++) {
+                if (arguments[0].call(self, this[i], i, this)) {
+                    return;
+                }
+            }
+        }
+    }
+
+    if (typeof Array.prototype.forEach === 'undefined') {
+        Array.prototype.forEach = function () {
+            var i;
+            var self = arguments[1];
+
+            for (i = 0; i < this.length; i++) {
+                arguments[0].call(self, this[i], i, this);
+            }
+        }
+    }
+
+    var ViewModel = function () {
+
         $(".card").css("visibility", "visible");
         var self = this;
-        this.ko = koTest || ko;
-        this.currentQuestionId = this.ko.observable(0);
+
+        this.currentQuestionId = ko.observable(0);
+
         this.allQuestions = model.getQuestions();
+
         this.allAnswers = model.getAnswers();
 
-        this.currentQuestion = this.ko.computed(function () {
+        this.currentQuestion = ko.computed(function () {
             var output;
 
             this.allQuestions.some(function (question) {
-                if (question.id == this.currentQuestionId()) {
+                if (question.id === this.currentQuestionId()) {
                     output = question;
                     return true;
                 }
@@ -27,13 +52,13 @@ define("ViewModel", ["Model", "Checklist"], function (Model, Checklist) {
             return output;
         }, this);
 
-        this.No = this.ko.observable(1);
+        this.No = ko.observable(1);
 
-        this.questionTitle = this.ko.computed(function () {
+        this.questionTitle = ko.computed(function () {
             return "Вопрос " + this.No() + ": " + this.currentQuestion().name;
         }, this);
 
-        this.answers = this.ko.computed(function () {
+        this.answers = ko.computed(function () {
             var output = [];
             var answers = this.currentQuestion().availableAnswersIds;
 
@@ -49,10 +74,10 @@ define("ViewModel", ["Model", "Checklist"], function (Model, Checklist) {
             return output;
         }, this);
 
-        this.TestName = this.ko.observable("Тест: Любите ли Вы животных?");
-        this.results = this.ko.observableArray(Checklist.results);
+        this.TestName = ko.observable("Тест: Любите ли Вы животных?");
+        this.results = ko.observableArray(model.results);
 
-        this.shouldShowResults = this.ko.computed(function () {
+        this.shouldShowResults = ko.computed(function () {
             if (this.results().length) {
                 $(".result-table").trigger("TableVisibleEvent");
                 return true;
@@ -62,27 +87,27 @@ define("ViewModel", ["Model", "Checklist"], function (Model, Checklist) {
             }
         }, this);
 
-        this.shouldShowForm = this.ko.computed(function () {
+        this.shouldShowForm = ko.computed(function () {
             return (!this.shouldShowResults());
         }, this);
 
-        this.selectedAnswer = this.ko.observable();
+        this.selectedAnswer = ko.observable();
 
         this.setSelectedAnswer = function (answer) {
             self.selectedAnswer(answer);
             return true;
         };
 
+
         this.setNextQuestion = function () {
-            /* at least one check is required  */
             if (self.selectedAnswer()) {
                 if (self.selectedAnswer().nextQuestionId == -1) {
-                    Checklist.addResult(self.currentQuestion(), self.selectedAnswer(), true);
-                    self.results(Checklist.results);
+                    model.addResult(self.currentQuestion(), self.selectedAnswer(), true);
+                    self.results(model.results);
                     self.selectedAnswer(null);
                     return;
                 }
-                Checklist.addResult(self.currentQuestion(), self.selectedAnswer(), false);
+                model.addResult(self.currentQuestion(), self.selectedAnswer(), false);
                 self.currentQuestionId(self.selectedAnswer().nextQuestionId);
                 self.No(self.No() + 1);
                 self.selectedAnswer(null);
@@ -96,9 +121,10 @@ define("ViewModel", ["Model", "Checklist"], function (Model, Checklist) {
             self.currentQuestionId(0);
             self.No(1);
             self.results([]);
-            Checklist.results.length = 0;
+            model.results.length = 0;
         };
     };
 
-    return ViewModel;
+    return new ViewModel();
+
 });

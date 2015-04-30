@@ -2,14 +2,9 @@
 // http://www.htmlgoodies.com/html5/javascript/spy-on-javascript-methods-using-the-jasmine-testing-framework.html#fbid=dyhDj7xPY-M
 // http://jasmine.github.io/2.0/introduction.html
 
-define(['Model'], function (Model) {
+define(['Model', 'LocalStorage'], function (model, localStorage) {
 
     describe("Model", function () {
-        var model;
-
-        beforeEach(function () {
-            model = new Model();
-        });
 
         describe('When data is empty object', function () {
             var result;
@@ -28,17 +23,6 @@ define(['Model'], function (Model) {
                 expect(result.length).toBe(0);
             });
 
-            it('should return empty message string of positive result', function () {
-                result = model.getPositiveResult();
-                expect(typeof result).toBe('string');
-                expect(result.length).toBe(0);
-            });
-
-            it('should return empty message string of negative result', function () {
-                result = model.getNegativeResult();
-                expect(typeof result).toBe('string');
-                expect(result.length).toBe(0);
-            });
         });
 
         describe('When data is undefined', function () {
@@ -57,17 +41,42 @@ define(['Model'], function (Model) {
                 result = model.getAnswers();
                 expect(result.length).toBe(0);
             });
+        });
 
-            it('should return empty message string of positive result', function () {
-                result = model.getPositiveResult();
-                expect(typeof result).toBe('string');
-                expect(result.length).toBe(0);
+        describe('When add a result', function () {
+            var question;
+            var answer;
+            var isLastQuestion;
+
+            beforeEach(function () {
+                question = {
+                    "id": 0,
+                    "name": "Кормили ли Вы когда-либо каких-нибудь животных?",
+                    "availableAnswersIds": [0, 1, 2]
+                }
+                answer = {
+                    "id": 0,
+                    "name": "Да, конечно.",
+                    "nextQuestionId": 1
+                };
+                model.results = [];
+                spyOn(localStorage, "setItem");
             });
 
-            it('should return empty message string of negative result', function () {
-                result = model.getNegativeResult();
-                expect(typeof result).toBe('string');
-                expect(result.length).toBe(0);
+            it('should add result to array results and don"t save it to localStorage for not last result', function () {
+                isLastQuestion = false;
+
+                model.addResult(question, answer, isLastQuestion);
+                expect(localStorage.setItem).not.toHaveBeenCalled();
+                expect(model.results.length).toBe(1);
+            });
+
+            it('should add result to array results and save it to localStorage for last result', function () {
+                isLastQuestion = true;
+
+                model.addResult(question, answer, isLastQuestion);
+                expect(localStorage.setItem).toHaveBeenCalled();
+                expect(model.results.length).toBe(1);
             });
         });
     });

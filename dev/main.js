@@ -1,18 +1,11 @@
 require.config({
     paths: {
         'text':
-        'lib/text',
-        'Model': './modules/Model',
-        'DataService': './modules/DataService',
-        'Checklist': './modules/Checklist',
-        'ViewModel': "./modules/ViewModel",
-        'LocalStorage': "../dev/modules/LocalStorage"
+        'lib/text'
     }
 });
 
-requirejs(["ViewModel"], function (ViewModel) {
-    var viewmodel;
-
-    viewmodel = new ViewModel();
+requirejs(["./modules/ViewModel"], function (viewmodel) {
     ko.applyBindings(viewmodel);
 });
+

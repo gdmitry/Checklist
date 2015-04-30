@@ -167,36 +167,8 @@
             currentWindowOnload();
         }
         htmlReporter.initialize();
-        loadClasses();
     };
-
-    /* Loads custom specs */
-    function loadClasses() {
-        require.config({
-            paths: {
-                'text':
-                '../dev/lib/text',
-                'Model': '../dev/modules/Model',
-                'DataService': '../dev/modules/DataService',
-                'LocalStorage': "../dev/modules/LocalStorage",
-                'Checklist': '../dev/modules/Checklist',
-                'ViewModel': "../dev/modules/ViewModel",
-            }
-        });
-
-        require([
-                 './modules/ChecklistSpec',
-                 './modules/ServiceSpec',
-                 './modules/ViewModelSpec',
-                 './modules/ModelSpec',
-                 './modules/LocalStorageSpec'
-        ],
-            function () {
-                console.log("Jasmine started..");
-                env.execute();
-            });
-    }
-
+    
     /**
      * Helper function for readability above.
      */
