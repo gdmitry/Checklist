@@ -4,7 +4,7 @@
 define(["./Model"], function (model) {
     'use strict';
 
-    if (typeof Array.prototype.some === 'undefined') {
+    if (typeof Array.prototype.some !== 'function') {
         Array.prototype.some = function () {
             var i;
             var self = arguments[1];
@@ -17,7 +17,7 @@ define(["./Model"], function (model) {
         }
     }
 
-    if (typeof Array.prototype.forEach === 'undefined') {
+    if (typeof Array.prototype.forEach !== 'function') {
         Array.prototype.forEach = function () {
             var i;
             var self = arguments[1];

@@ -16,6 +16,6 @@ require([
         './modules/LocalStorageSpec'
 ],
     function () {
-        console.log("Jasmine started..");
+        (typeof console !== 'undefined' && typeof console.log === "function") ? console.log("Jasmine started..") : "";
         jasmine.getEnv().execute();
     });

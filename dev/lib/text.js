@@ -268,7 +268,7 @@ define(['module'], function (module) {
         text.get = function (url, callback, errback, headers) {
             var xhr = text.createXhr(), header;
             // Set type of file implicitly            
-            xhr.overrideMimeType ?  xhr.overrideMimeType("text/html") : "";
+            typeof xhr.overrideMimeType !== 'undefined' ? xhr.overrideMimeType("text/html") : "";
             xhr.open('GET', url, true);
 
             //Allow plugins direct access to xhr headers
