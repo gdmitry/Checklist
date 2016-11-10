@@ -2,35 +2,48 @@
 (function () {
     'use strict';
 
-    $(".card").append('<button type="button" style="visibility: hidden" class="animateButton">Animate</button>');
+    var cardElement = $(".card");
+    var tableElement = $(".result-table");
+    var button = $('.animateButton');
 
-    var time = 500;
+    var TIMEOUT = 500;
     var isResultTableVisible = true;
-    var animateUp = function () {
-        $('.result-table').stop().animate({ boxShadow: '10px 10px 5px', top: 0, left: 0 }, 'fast');
+
+    function animateUp() {
+        tableElement
+            .stop()
+            .animate({ boxShadow: '10px 10px 5px', top: 0, left: 0 }, 'fast');
+
         if (isResultTableVisible) {
-            setTimeout(animateDown, time);
+            setTimeout(animateDown, TIMEOUT);
         }
     };
 
-    var animateDown = function () {
-        $('.result-table').stop().animate({ boxShadow: '3px 3px 3px', top: 3, left: 3 }, 'fast');
+    function animateDown() {
+        tableElement
+            .stop()
+            .animate({ boxShadow: '3px 3px 3px', top: 3, left: 3 }, 'fast');
+
         if (isResultTableVisible) {
-            setTimeout(animateUp, time);
+            setTimeout(animateUp, TIMEOUT);
         }
     };
 
-    $('.animateButton').click(function () {
-        animateUp();
-    });
+    // TO DO: Refactor event handlers for TableVisibleEvent and TableHiddenEvent to use one event
+    function toggleButton() {
 
-    $(".result-table").on("TableVisibleEvent", function () {
-        $('.animateButton').css('visibility', 'visible');
+    }
+
+    button.click(animateUp);
+    cardElement.append('<button type="button" style="visibility: hidden" class="animateButton">Animate</button>');
+
+    tableElement.on("TableVisibleEvent", function () {
+        button.css('visibility', 'visible');
         isResultTableVisible = true;
     });
 
-    $(".result-table").on("TableHiddenEvent", function () {
-        $('.animateButton').css('visibility', 'hidden');
+    tableElement.on("TableHiddenEvent", function () {
+        button.css('visibility', 'hidden');
         isResultTableVisible = false;
     });
 
